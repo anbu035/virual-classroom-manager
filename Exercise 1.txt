@@ -1,9 +1,3 @@
-1. Behavioral Design Patterns
-Use Case 1: Observer Pattern
-Scenario: A weather monitoring system where multiple displays need to be updated whenever the weather data changes.
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +35,7 @@ class WeatherStation {
 class PhoneApp implements Observer {
     @Override
     public void update(float temperature) {
-        System.out.println("PhoneApp: The current temperature is " + temperature + "°C");
+        System.out.println("PhoneApp: The current temperature is " + temperature + "C");
     }
 }
 
@@ -49,7 +43,7 @@ class PhoneApp implements Observer {
 class WeatherDisplay implements Observer {
     @Override
     public void update(float temperature) {
-        System.out.println("WeatherDisplay: The current temperature is " + temperature + "°C");
+        System.out.println("WeatherDisplay: The current temperature is " + temperature + "C");
     }
 }
 
@@ -66,13 +60,6 @@ public class ObserverPatternExample {
         weatherStation.setTemperature(23.5f);
     }
 }
-Use Case 2: Strategy Pattern
-Scenario: A navigation system where users can choose different strategies for routing: shortest path, scenic route, or fastest route.
-
-
-
-
-
 // Strategy Interface
 interface RouteStrategy {
     String route(String start, String end);
@@ -118,7 +105,7 @@ class NavigationSystem {
 }
 
 // Usage
-public class StrategyPatternExample {
+class StrategyPatternExample {
     public static void main(String[] args) {
         NavigationSystem navigation = new NavigationSystem(new ShortestRoute());
         System.out.println(navigation.navigate("A", "B"));
@@ -130,18 +117,8 @@ public class StrategyPatternExample {
         System.out.println(navigation.navigate("A", "B"));
     }
 }
-
-
-
-
-2. Creational Design Patterns
-Use Case 1: Singleton Pattern
-Scenario: Implement a logging system where only one instance of the logger is used throughout the application.
-
-
-
 // Singleton Logger
-public class SingletonLogger {
+class SingletonLogger {
     private static SingletonLogger instance;
     private List<String> log = new ArrayList<>();
 
@@ -165,7 +142,7 @@ public class SingletonLogger {
 }
 
 // Usage
-public class SingletonPatternExample {
+class SingletonPatternExample {
     public static void main(String[] args) {
         SingletonLogger logger1 = SingletonLogger.getInstance();
         SingletonLogger logger2 = SingletonLogger.getInstance();
@@ -176,16 +153,6 @@ public class SingletonPatternExample {
         System.out.println(logger1 == logger2); // Should be true, confirming both are the same instance
     }
 }
-
-
-
-Use Case 2: Factory Method Pattern
-Scenario: Create different types of documents (PDF, Word) using a document creation factory.
-
-
-
-
-
 // Document Interface
 interface Document {
     String create();
@@ -225,9 +192,7 @@ class WordDocumentFactory implements DocumentFactory {
         return new WordDocument();
     }
 }
-
-// Usage
-public class FactoryMethodPatternExample {
+class FactoryMethodPatternExample {
     public static void main(String[] args) {
         DocumentFactory pdfFactory = new PDFDocumentFactory();
         DocumentFactory wordFactory = new WordDocumentFactory();
@@ -236,16 +201,6 @@ public class FactoryMethodPatternExample {
         System.out.println(wordFactory.createDocument().create());
     }
 }
-
-
-
-3. Structural Design Patterns
-Use Case 1: Adapter Pattern
-Scenario: Adapt an old logging system to a new logging interface.
-
-
-
-
 // Old Logging System
 class OldLogger {
     public void oldLog(String message) {
@@ -273,20 +228,13 @@ class LoggerAdapter implements NewLoggerInterface {
 }
 
 // Usage
-public class AdapterPatternExample {
+class AdapterPatternExample {
     public static void main(String[] args) {
         OldLogger oldLogger = new OldLogger();
         NewLoggerInterface logger = new LoggerAdapter(oldLogger);
         logger.log("This is a message using the adapter pattern.");
     }
 }
-Use Case 2: Decorator Pattern
-Scenario: Extend the functionality of a basic coffee object with additional features like milk or sugar.
-
-
-
-
-
 // Component
 interface Coffee {
     double cost();
@@ -338,7 +286,7 @@ class SugarDecorator extends CoffeeDecorator {
 }
 
 // Usage
-public class DecoratorPatternExample {
+class DecoratorPatternExample {
     public static void main(String[] args) {
         Coffee coffee = new BasicCoffee();
         System.out.println("Basic coffee cost: $" + coffee.cost());
