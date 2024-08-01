@@ -63,13 +63,6 @@ class Assignment {
     }
 }
 
-
-//2. Factory Method
-//Create factories for creating classrooms and students.
-
-
-
-
 // Factory Interface
 interface Factory<T> {
     T create(String name);
@@ -77,7 +70,6 @@ interface Factory<T> {
 
 // Classroom Factory
 class ClassroomFactory implements Factory<Classroom> {
-    //@Override
     public Classroom create(String name) {
         return new Classroom(name);
     }
@@ -85,15 +77,10 @@ class ClassroomFactory implements Factory<Classroom> {
 
 // Student Factory
 class StudentFactory implements Factory<Student> {
-    //@Override
     public Student create(String id) {
         return new Student(id);
     }
 }
-
-
-//3. Observer Pattern for Assignment Submission
-//Define an observer pattern for handling assignment submissions.
 
 // Observer Interface
 interface Observer {
@@ -137,12 +124,6 @@ class AssignmentSubmissionNotifier implements Observer {
     }
 }
 
-
-//4. Command Pattern for Handling User Commands
-//Create a command pattern to handle user inputs.
-
-
-
 // Command Interface
 interface Command {
     void execute();
@@ -160,7 +141,7 @@ class AddClassroomCommand implements Command {
         this.classrooms = classrooms;
     }
 
-    //@Override
+    @Override
     public void execute() {
         Classroom classroom = factory.create(name);
         classrooms.add(classroom);
@@ -181,7 +162,7 @@ class AddStudentCommand implements Command {
         this.classrooms = classrooms;
     }
 
-   // @Override
+    @Override
     public void execute() {
         Student student = factory.create(id);
         for (Classroom classroom : classrooms) {
@@ -206,7 +187,7 @@ class ScheduleAssignmentCommand implements Command {
         this.classrooms = classrooms;
     }
 
-    //@Override
+    @Override
     public void execute() {
         for (Classroom classroom : classrooms) {
             if (classroom.getName().equals(className)) {
@@ -232,16 +213,13 @@ class SubmitAssignmentCommand implements Command {
         this.manager = manager;
     }
 
-    //@Override
+    @Override
     public void execute() {
         manager.notifyObservers(studentId, className, assignmentDetails);
     }
 }
 
-
-//5. Main Application
-//Implement the main application to handle user commands and manage the system state.
-
+// Main Application
 public class VirtualClassroomManager {
 
     public static void main(String[] args) {
@@ -257,7 +235,7 @@ public class VirtualClassroomManager {
         while (true) {
             System.out.println("Enter command:");
             String command = scanner.nextLine();
-            String[] parts = command.split(" ", 4);
+            String[] parts = command.split(" ", 4); // Split into up to 4 parts
 
             switch (parts[0]) {
                 case "add_classroom":
@@ -269,14 +247,11 @@ public class VirtualClassroomManager {
                     break;
                 case "add_student":
                     if (parts.length == 3) {
-                        String[] studentInfo = parts[1].split(" ", 2);
-                        if (studentInfo.length == 2) {
-                            new AddStudentCommand(studentFactory, studentInfo[0], studentInfo[1], classrooms).execute();
-                        } else {
-                            System.out.println("Invalid student command format.");
-                        }
+                        String studentId = parts[1];
+                        String className = parts[2];
+                        new AddStudentCommand(studentFactory, studentId, className, classrooms).execute();
                     } else {
-                        System.out.println("Invalid command format.");
+                        System.out.println("Invalid student command format.");
                     }
                     break;
                 case "schedule_assignment":
@@ -287,15 +262,13 @@ public class VirtualClassroomManager {
                     }
                     break;
                 case "submit_assignment":
-                    if (parts.length == 3) {
-                        String[] submitInfo = parts[1].split(" ", 2);
-                        if (submitInfo.length == 2) {
-                            new SubmitAssignmentCommand(submitInfo[0], submitInfo[1], parts[2], assignmentManager).execute();
-                        } else {
-                            System.out.println("Invalid submit command format.");
-                        }
+                    if (parts.length == 4) {
+                        String studentId = parts[1];
+                        String className = parts[2];
+                        String assignmentDetails = parts[3];
+                        new SubmitAssignmentCommand(studentId, className, assignmentDetails, assignmentManager).execute();
                     } else {
-                        System.out.println("Invalid command format.");
+                        System.out.println("Invalid submit command format.");
                     }
                     break;
                 default:
